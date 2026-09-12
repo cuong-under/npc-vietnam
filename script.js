@@ -4,6 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initLanguageSwitcher();
   initStickyHeader();
   initMobileMenu();
   initScrollSpy();
@@ -471,4 +472,71 @@ function initFaqAccordion() {
       }
     });
   });
+}
+
+/* ==========================================================================
+   12. BILINGUAL LANGUAGE SWITCHER (VI / EN)
+   ========================================================================== */
+function initLanguageSwitcher() {
+  const langButtons = document.querySelectorAll('.lang-btn');
+  if (!langButtons.length) return;
+
+  // Get saved language or fallback to Vietnamese
+  let currentLang = localStorage.getItem('npc_lang') || 'vi';
+
+  function applyLanguage(lang) {
+    if (!window.i18nData || !window.i18nData[lang]) return;
+
+    const dict = window.i18nData[lang];
+
+    // 1. Update text content of data-i18n elements
+    const translatableElements = document.querySelectorAll('[data-i18n]');
+    translatableElements.forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) {
+        // If element contains raw text or simple inline tags
+        el.textContent = dict[key];
+      }
+    });
+
+    // 2. Update placeholders of data-i18n-ph elements
+    const placeholderElements = document.querySelectorAll('[data-i18n-ph]');
+    placeholderElements.forEach((el) => {
+      const key = el.getAttribute('data-i18n-ph');
+      if (dict[key] !== undefined) {
+        el.placeholder = dict[key];
+      }
+    });
+
+    // 3. Update HTML lang attribute
+    document.documentElement.lang = lang;
+
+    // 4. Update active button state on all switchers (desktop & mobile)
+    langButtons.forEach((btn) => {
+      if (btn.getAttribute('data-lang') === lang) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // 5. Persist to localStorage
+    localStorage.setItem('npc_lang', lang);
+  }
+
+  // Bind click event listeners to all lang buttons
+  langButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const selectedLang = btn.getAttribute('data-lang');
+      if (selectedLang) {
+        applyLanguage(selectedLang);
+      }
+    });
+  });
+
+  // Apply initially (in case user already selected EN previously)
+  if (currentLang !== 'vi') {
+    applyLanguage(currentLang);
+  }
 }
