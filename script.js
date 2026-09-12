@@ -290,15 +290,19 @@ function initLightboxGallery() {
   });
 
   const renderItem = (index) => {
-    if (index < 0) index = itemsData.length - 1;
-    if (index >= itemsData.length) index = 0;
+    if (index < 0) index = galleryItems.length - 1;
+    if (index >= galleryItems.length) index = 0;
     currentIndex = index;
 
-    const data = itemsData[currentIndex];
-    lightboxImg.src = data.src;
-    lightboxImg.alt = data.caption;
-    lightboxCaption.textContent = data.caption;
-    lightboxCounter.textContent = `${currentIndex + 1} / ${itemsData.length}`;
+    const isEn = document.documentElement.lang === 'en';
+    const itemEl = galleryItems[currentIndex];
+    const src = itemEl.getAttribute('data-src');
+    const caption = (isEn ? itemEl.getAttribute('data-caption-en') : itemEl.getAttribute('data-caption')) || itemEl.getAttribute('data-caption') || '';
+
+    lightboxImg.src = src;
+    lightboxImg.alt = caption;
+    lightboxCaption.textContent = caption;
+    lightboxCounter.textContent = `${currentIndex + 1} / ${galleryItems.length}`;
   };
 
   const openLightbox = (index) => {
@@ -349,13 +353,22 @@ function initRegistrationForm() {
     const agreed = document.getElementById('agreeRules')?.checked;
 
     if (!fullName || !phone || !email || !division || !agreed) {
-      showFeedback('Vui lòng điền đầy đủ các thông tin bắt buộc và chấp thuận điều lệ!', 'error');
+      const isEn = document.documentElement.lang === 'en';
+      showFeedback(
+        isEn
+          ? 'Please fill in all required fields and accept the competition regulations!'
+          : 'Vui lòng điền đầy đủ các thông tin bắt buộc và chấp thuận điều lệ!',
+        'error'
+      );
       return;
     }
 
     // Success response
+    const isEn = document.documentElement.lang === 'en';
     showFeedback(
-      `Chúc mừng <strong>${fullName}</strong>! Bạn đã đăng ký sơ bộ thành công cho hạng mục <strong>${division.toUpperCase()}</strong>. Ban thư ký NPC Vietnam sẽ liên hệ qua SĐT ${phone} trong vòng 24h để xác nhận hồ sơ.`,
+      isEn
+        ? `Congratulations <strong>${fullName}</strong>! You have successfully registered for <strong>${division.toUpperCase()}</strong>. The NPC Vietnam Secretariat will contact you via phone ${phone} within 24h to verify your submission.`
+        : `Chúc mừng <strong>${fullName}</strong>! Bạn đã đăng ký sơ bộ thành công cho hạng mục <strong>${division.toUpperCase()}</strong>. Ban thư ký NPC Vietnam sẽ liên hệ qua SĐT ${phone} trong vòng 24h để xác nhận hồ sơ.`,
       'success'
     );
     form.reset();
@@ -489,13 +502,12 @@ function initLanguageSwitcher() {
 
     const dict = window.i18nData[lang];
 
-    // 1. Update text content of data-i18n elements
+    // 1. Update content of data-i18n elements (support HTML tags like <strong>)
     const translatableElements = document.querySelectorAll('[data-i18n]');
     translatableElements.forEach((el) => {
       const key = el.getAttribute('data-i18n');
       if (dict[key] !== undefined) {
-        // If element contains raw text or simple inline tags
-        el.textContent = dict[key];
+        el.innerHTML = dict[key];
       }
     });
 
@@ -528,7 +540,8 @@ function initLanguageSwitcher() {
   langButtons.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const selectedLang = btn.getAttribute('data-lang');
+      const targetBtn = e.target.closest('.lang-btn') || btn;
+      const selectedLang = targetBtn.getAttribute('data-lang');
       if (selectedLang) {
         applyLanguage(selectedLang);
       }
