@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBackToTop();
   initVideoModal();
   initFaqAccordion();
+  initHeroSlideshow();
 });
 
 /* ==========================================================================
@@ -338,6 +339,9 @@ function initLightboxGallery() {
    8. REGISTRATION FORM SIMULATION
    ========================================================================== */
 function initRegistrationForm() {
+  // Registration form replaced by static services/payment block — no form logic needed.
+  return;
+  /* eslint-disable no-unreachable */
   const form = document.getElementById('registerForm');
   const feedback = document.getElementById('formFeedback');
 
@@ -552,4 +556,80 @@ function initLanguageSwitcher() {
   if (currentLang !== 'vi') {
     applyLanguage(currentLang);
   }
+}
+
+/* ==========================================================================
+   HERO SLIDER - PROFESSIONAL
+   ========================================================================== */
+function initHeroSlideshow() {
+  const slider = document.getElementById('heroSlider');
+  if (!slider) return;
+
+  const hero = slider.closest('.hero');
+  const track = slider.querySelector('.hero-slider-track');
+  const slides = slider.querySelectorAll('.hero-slide');
+  const dots = hero.querySelectorAll('.slider-dot');
+  const prevBtn = hero.querySelector('.slider-prev');
+  const nextBtn = hero.querySelector('.slider-next');
+  const progressBar = hero.querySelector('.slider-progress-bar');
+
+  let current = 0;
+  const total = slides.length;
+  let autoplayTimer = null;
+  let progressInterval = null;
+  const AUTOPLAY_DELAY = 6000;
+  let progress = 0;
+
+  function goTo(index) {
+    current = (index + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    resetProgress();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function resetProgress() {
+    progress = 0;
+    progressBar.style.width = '0%';
+    clearInterval(progressInterval);
+    progressInterval = setInterval(() => {
+      progress += 100 / (AUTOPLAY_DELAY / 50);
+      progressBar.style.width = progress + '%';
+    }, 50);
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    resetProgress();
+    autoplayTimer = setInterval(next, AUTOPLAY_DELAY);
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplayTimer);
+    clearInterval(progressInterval);
+  }
+
+  prevBtn.addEventListener('click', () => { prev(); startAutoplay(); });
+  nextBtn.addEventListener('click', () => { next(); startAutoplay(); });
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      goTo(parseInt(dot.dataset.index));
+      startAutoplay();
+    });
+  });
+
+  hero.addEventListener('mouseenter', stopAutoplay);
+  hero.addEventListener('mouseleave', startAutoplay);
+
+  let touchStartX = 0;
+  hero.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; stopAutoplay(); }, { passive: true });
+  hero.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
+    startAutoplay();
+  }, { passive: true });
+
+  startAutoplay();
 }

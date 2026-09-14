@@ -1,7 +1,7 @@
 /* ==========================================================================
    NPC VIETNAM - OFFICIAL CHAMPIONSHIP STYLESHEET
-   Style: Global Classic Vietnam - Royal Blue, Metallic Gold & Flame Red
-   Inspired directly by Official NPC Vietnam / Global Classic Banner
+   Style: NPC WORLDWIDE Vietnam - Royal Blue, Metallic Gold & Flame Red
+   Inspired directly by Official NPC Vietnam / NPC WORLDWIDE Banner
    ========================================================================== */
 
 /* --- 1. CSS VARIABLES & DESIGN TOKENS --- */
@@ -539,17 +539,124 @@ button, input, select, textarea {
   overflow: hidden;
 }
 
-.hero-bg {
+/* --- HERO SLIDER --- */
+.hero-slider {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hero-slider-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.hero-slide {
+  min-width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center 30%;
   transform: scale(1.05);
-  animation: subtleZoom 20s infinite alternate ease-in-out;
-  z-index: 1;
+  animation: sliderZoom 8s ease-in-out infinite alternate;
+}
+
+.hero-slide:nth-child(2) {
+  animation-delay: -8s;
+}
+
+@keyframes sliderZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(5, 8, 20, 0.5);
+  border: 1.5px solid rgba(234, 179, 8, 0.4);
+  color: #fef08a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.hero-slider:hover .slider-arrow {
+  opacity: 1;
+}
+
+.slider-arrow:hover {
+  background: rgba(234, 179, 8, 0.25);
+  border-color: #eab308;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-prev { left: 24px; }
+.slider-next { right: 24px; }
+
+.slider-dots {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 5;
+}
+
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(234, 179, 8, 0.6);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  padding: 0;
+}
+
+.slider-dot.active {
+  background: #eab308;
+  border-color: #eab308;
+  box-shadow: 0 0 12px rgba(234, 179, 8, 0.6);
+  transform: scale(1.2);
+}
+
+.slider-dot:hover {
+  border-color: #fef08a;
+  background: rgba(234, 179, 8, 0.4);
+}
+
+.slider-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 5;
+}
+
+.slider-progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #eab308, #fef08a);
+  transition: width 0.3s linear;
+  box-shadow: 0 0 8px rgba(234, 179, 8, 0.5);
 }
 
 @keyframes subtleZoom {
@@ -2996,4 +3103,294 @@ button, input, select, textarea {
   .hero-bg {
     animation: none;
   }
+}
+
+/* ==========================================================================
+   SERVICES / BOOKING BLOCK (Register Section)
+   ========================================================================== */
+.services-block {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: left;
+  background: rgba(15, 25, 56, 0.55);
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  border-radius: 18px;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.services-heading {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.services-sub {
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.services-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.services-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+}
+
+.services-list .svc-dots {
+  flex: 1;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.25);
+  transform: translateY(-4px);
+}
+
+.services-list .svc-price {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--gold-primary);
+  white-space: nowrap;
+}
+
+.services-subheading {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.services-text {
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+.services-text a {
+  color: var(--gold-light);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(254, 240, 138, 0.4);
+  transition: border-color 0.2s ease;
+}
+
+.services-text a:hover {
+  border-color: var(--gold-light);
+}
+
+.services-paypal {
+  background: rgba(234, 179, 8, 0.08);
+  border-left: 3px solid var(--gold-primary);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  margin: 1rem 0;
+}
+
+.services-paypal p {
+  margin: 0.25rem 0;
+  color: #f1f5f9;
+}
+
+.services-paypal a {
+  color: var(--gold-light);
+  text-decoration: none;
+}
+
+.services-highlight {
+  display: inline-block;
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin: 0 0 1rem;
+  color: var(--gold-light);
+  letter-spacing: 0.03em;
+}
+
+.services-qr {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem 0;
+}
+
+.services-qr-img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 2px solid rgba(234, 179, 8, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 480px) {
+  .services-qr-img {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+/* ==========================================================================
+   PACKAGES 2-COLUMN (Show Pricing)
+   ========================================================================== */
+.packages-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pkg-shows {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pkg-show {
+  background: rgba(11, 19, 46, 0.65);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+}
+
+.pkg-featured .pkg-show {
+  border-color: rgba(234, 179, 8, 0.28);
+}
+
+.pkg-show-head {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--blue-electric);
+  margin-bottom: 0.5rem;
+}
+
+.pkg-featured .pkg-show-head {
+  color: var(--gold-light);
+}
+
+.pkg-show-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.pkg-show-price strong {
+  color: var(--gold-primary);
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 992px) {
+  .packages-grid-2 {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
+}
+
+/* ==========================================================================
+   SCHEDULE 2-COLUMN DAYS LAYOUT
+   ========================================================================== */
+.schedule-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.schedule-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.timeline-col-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.35);
+}
+
+@media (max-width: 992px) {
+  .schedule-columns {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+/* ==========================================================================
+   SCHEDULE SHOW COLUMNS (logo + timeline)
+   ========================================================================== */
+.show-col {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+}
+
+.show-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  padding: 18px 24px;
+  margin-bottom: 20px;
+}
+
+.show-logo-img {
+  max-width: 100%;
+  max-height: 180px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.show-col .timeline-col-title {
+  text-align: center;
+  border-bottom: none;
+  margin-bottom: 24px;
+}
+
+.footer-email-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-email-link:hover {
+  color: var(--gold-light);
+}
+
+.procard-service-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--gold-primary);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(234, 179, 8, 0.3);
 }
