@@ -202,7 +202,7 @@ const i18nData = {
     faq_q4: "4. Tôi cần gửi nhạc trình diễn Posing Routine bằng cách nào?",
     faq_a4: "Đối với hạng mục Bodybuilding & Classic Physique (bài diễn 60 giây), sau khi hoàn tất đăng ký, bạn sẽ nhận được liên kết tải nhạc cá nhân lên hệ thống (định dạng MP3 chất lượng cao). Hạn chót nộp nhạc là 10 ngày trước giải đấu.",
     faq_q5: "5. Khán giả và người thân có thể mua vé vào xem như thế nào?",
-    faq_a5: "Vé khán giả (Standard, VIP và VVIP Front-Row) được mở bán trực tiếp tại website này hoặc hotline BTC 093 883 39 79. Mỗi VĐV đăng ký gói Pro VIP đã được tặng kèm 01 vé VIP hàng đầu.",
+    faq_a5: "Vé khán giả (Standard, VIP và VVIP Front-Row) được mở bán trực tiếp tại website chính thức npcvietnam.com hoặc hotline BTC 093 883 39 79. Mỗi VĐV đăng ký gói Pro VIP đã được tặng kèm 01 vé VIP hàng đầu.",
 
     // Highlights (Why choose)
     hl_eyebrow: "TẠI SAO CHỌN NPC VIETNAM?",
@@ -492,7 +492,7 @@ const i18nData = {
     faq_q4: "4. How do I submit my 60-second posing routine music?",
     faq_a4: "For Bodybuilding & Classic Physique competitors (60s routine), upon registration completion, you will receive a secure portal link to upload your high-quality MP3 track. Music submission closes 10 days before showtime.",
     faq_q5: "5. How can spectators and family purchase tickets?",
-    faq_a5: "Spectator tickets (Standard, VIP, and Front-Row VVIP) are available directly on this official website or via hotline +84 93 883 39 79. All athletes who choose the Pro VIP package receive 1 complimentary VIP front-row pass.",
+    faq_a5: "Spectator tickets (Standard, VIP, and Front-Row VVIP) are available directly on the official website npcvietnam.com or via hotline +84 93 883 39 79. All athletes who choose the Pro VIP package receive 1 complimentary VIP front-row pass.",
 
     // Highlights (Why choose)
     hl_eyebrow: "WHY CHOOSE NPC VIETNAM?",
